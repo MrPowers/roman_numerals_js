@@ -10,9 +10,9 @@ romanToNumber = function (roman) {
   }
 
   var arr = roman.split("");
-  var nums = _.map(arr, function(c) { return mapping[c] });
-  return _.inject(nums, function(memo, num, i) {
-    var next = nums[i + 1];
+  return _.inject(arr, function(memo, letter, i) {
+    var num = mapping[letter];
+    var next = mapping[arr[i + 1]];
     if (next === undefined || next <= num) {
       return memo + num;
     } else {
@@ -44,11 +44,9 @@ numberToRoman = function (number) {
   _.each(keys, function(k) {
     var div = Math.floor(number / k);
     var mod = number % k;
-    if (div != 0) {
-      _(div).times(function() {
-        result.push(mapping[k]);
-      });
-    }
+    _(div).times(function() {
+      result.push(mapping[k]);
+    });
     number = mod;
   });
   return result.join("");
